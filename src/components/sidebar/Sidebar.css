@@ -3,6 +3,9 @@
   height: 100vh;
   background-color: rgba(255, 255, 255, 0.9);
   transition: 0.5s;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
@@ -31,6 +34,7 @@
   border-radius: 8px;
   padding: 5px;
   overflow: hidden;
+  min-height: 24px;
 }
 
 .mini {
@@ -44,4 +48,13 @@
 .icon-wrap {
   margin-right: 15px;
   display: flex;
+}
+
+.submenu-dropdown {
+  display: none;
+}
+
+.open {
+  display: block;
+  height: auto;
 }

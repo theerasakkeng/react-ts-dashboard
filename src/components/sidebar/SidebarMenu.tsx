@@ -1,23 +1,23 @@
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import { Dashboard, AccountCircle } from "@mui/icons-material";
 import { SidebarMenuInterface } from "../../interface/sidebar";
 
 export const SidebarMenu: SidebarMenuInterface[] = [
   {
     title: "Dashboard",
-    icon: DashboardIcon,
+    icon: Dashboard,
     active_icon: null,
     link: "/dashboard",
     submenu: [],
   },
   {
     title: "Customer",
-    icon: DashboardIcon,
+    icon: AccountCircle,
     active_icon: null,
     link: "/customer",
     submenu: [
       {
         title: "Report",
-        icon: DashboardIcon,
+        icon: AccountCircle,
         active_icon: null,
         link: "/report",
       },

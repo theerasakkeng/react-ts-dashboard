@@ -12,6 +12,13 @@ body {
 
 .content-wrap {
   width: calc(100% - 240px);
+  margin-left: 240px;
+  transition: 0.5s;
+}
+
+.content-wrap-responsive-mini {
+  width: calc(100% - 64px) !important;
+  margin-left: 64px !important;
 }
 
 .content-main {

@@ -1,9 +1,10 @@
 .navbar-top-wrap {
-  height: 75px;
-  width: 100%;
+  height: 65px;
+  right: 0;
   position: fixed;
   z-index: 999;
   background-color: rgba(255, 255, 255, 0.9);
+  transition: 0.5s;
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
@@ -12,4 +13,16 @@
     backdrop-filter: blur(1px);
     background-color: rgba(255, 255, 255, 0.5);
   }
+}
+
+.navbar-top-item {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-menu {
+  width: fit-content;
+  cursor: pointer;
 }

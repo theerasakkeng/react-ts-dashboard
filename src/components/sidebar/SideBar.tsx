@@ -16,33 +16,61 @@ const SideBar: FunctionComponent = () => {
   }, []);
 
   const goTo = (menudata: any) => {
-    console.log(menudata.submenu.length);
     if (menudata.submenu.length > 0) {
-      setDropdownMene((prev) => !prev);
+      if (dropdownMenu == false) {
+        setDropdownMene(true);
+      } else {
+        setDropdownMene(false);
+      }
     } else if (menudata.submenu.length == 0) {
+      setDropdownMene(false);
       navigate(menudata.link);
       setPart(menudata.link);
     }
   };
 
+  const goToSubmenu = (submenu_data: any) => {
+    navigate(submenu_data.link);
+    setPart(submenu_data.link);
+  };
+
   const menuElements = SidebarMenu.map((item, index) => {
-    const { title, link } = item;
     return (
-      <div
-        key={index}
-        className={`menu-wrap${
-          part == item.link && dropdownMenu == false ? " active" : ""
-        }${
-          dropdownMenu == true && item.submenu.length > 0
-            ? " dropdown-active"
-            : ""
-        }`}
-        onClick={() => goTo(item)}
-      >
-        <div className="icon-wrap">
-          <item.icon />
+      <div className="menu-group" key={index}>
+        <div
+          className={`menu-wrap${part == item.link ? " active" : ""}${
+            dropdownMenu == true && item.submenu.length > 0
+              ? " dropdown-active"
+              : ""
+          }`}
+          onClick={() => goTo(item)}
+        >
+          <div className="icon-wrap">
+            <item.icon />
+          </div>
+          <div>{item.title}</div>
         </div>
-        <div>{title}</div>
+        {item.submenu.map((subitem, index) => {
+          if (item.submenu.length > 0) {
+            return (
+              <div
+                className={`submenu-dropdown${
+                  dropdownMenu == true ? " open" : ""
+                }`}
+                key={index}
+              >
+                <div
+                  className={`menu-wrap${
+                    part == subitem.link ? " active" : ""
+                  }`}
+                  onClick={() => goToSubmenu(subitem)}
+                >
+                  {subitem.title}
+                </div>
+              </div>
+            );
+          }
+        })}
       </div>
     );
   });
