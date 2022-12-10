@@ -1,0 +1,47 @@
+.sidebar-wrap {
+  width: 240px;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: 0.5s;
+}
+
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+  .sidebar-wrap {
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.sidebar-logo-top {
+  height: 75px;
+  border-bottom: 1px solid rgba(61, 60, 60, 0.219);
+  border-right: 1px solid rgba(61, 60, 60, 0.219);
+}
+
+.sidebar-menu-wrap {
+  padding: 15px;
+}
+
+.menu-wrap {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.mini {
+  width: 64px !important;
+}
+
+.active {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.icon-wrap {
+  margin-right: 15px;
+  display: flex;
+}

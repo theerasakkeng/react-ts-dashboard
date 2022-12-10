@@ -1,0 +1,15 @@
+.navbar-top-wrap {
+  height: 75px;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+  .navbar-top-wrap {
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
