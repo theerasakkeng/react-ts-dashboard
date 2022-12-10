@@ -13,13 +13,14 @@ export const SidebarMenu: SidebarMenuInterface[] = [
     title: "Customer",
     icon: AccountCircle,
     active_icon: null,
-    link: "/customer",
+    link: "",
     submenu: [
       {
-        title: "Report",
-        icon: AccountCircle,
+        title: "Customer List",
+        icon: null,
         active_icon: null,
-        link: "/report",
+        link: "/customer",
+        submenu: [],
       },
     ],
   },

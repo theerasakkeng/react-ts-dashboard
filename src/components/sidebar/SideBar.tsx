@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./Sidebar.css";
 import { SidebarMenu } from "./SidebarMenu";
 
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+
 const SideBar: FunctionComponent = () => {
   const navigate = useNavigate();
   let location = useLocation();
@@ -65,7 +67,10 @@ const SideBar: FunctionComponent = () => {
                   }`}
                   onClick={() => goToSubmenu(subitem)}
                 >
-                  {subitem.title}
+                  <div className="icon-submenu">
+                    <FiberManualRecordIcon sx={{fontSize:12}}/>
+                  </div>
+                  <div>{subitem.title}</div>
                 </div>
               </div>
             );
