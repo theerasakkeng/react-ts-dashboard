@@ -7,7 +7,7 @@ body {
 }
 
 .layout-wrap {
-  display: flex;
+  /* display: flex; */
 }
 
 .content-wrap {
@@ -22,7 +22,7 @@ body {
 }
 
 .content-main {
-  padding-top: 75px;
+  padding-top: 65px;
   width: 100%;
   height: calc(100% - 75px);
 }
@@ -39,5 +39,26 @@ body {
     -webkit-backdrop-filter: blur(1px);
     backdrop-filter: blur(1px);
     background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .sidebar-wrap {
+    display: none;
+  }
+
+  .content-wrap {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .navbar-top-wrap {
+    width: 100% !important;
+    left: 0;
+  }
+
+  .content-wrap-responsive-mini {
+    margin-left: 0 !important;
+    width: 100% !important;
   }
 }

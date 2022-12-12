@@ -55,27 +55,37 @@ const Customer: FunctionComponent = () => {
   if (dataTable) {
     return (
       <div>
-        <TableContainer sx={{ borderRadius: "10px" }}>
-          <Table>
+        <TableContainer
+          sx={{ borderRadius: "10px", minWidth: "100%", overFlow: "auto" }}
+        >
+          <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell align="center">No.</TableCell>
-                <TableCell align="center">Picture</TableCell>
-                <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Last Name</TableCell>
+                <TableCell align="center" sx={{ width: "10%" }}>
+                  No.
+                </TableCell>
+                <TableCell align="center" sx={{ width: "10%" }}>
+                  Picture
+                </TableCell>
+                <TableCell align="center" sx={{ width: "25%" }}>
+                  Name
+                </TableCell>
+                <TableCell align="center" sx={{ width: "25%" }}>
+                  Last Name
+                </TableCell>
                 <TableCell align="center">E-mail</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {dataTable.data.map((data: any, index: number) => (
                 <TableRow key={index}>
-                  <TableCell align="center">{data.id}</TableCell>
-                  <TableCell align="center">
+                  <TableCell align="left">{data.id}</TableCell>
+                  <TableCell align="left">
                     <Avatar src={data.avatar} />
                   </TableCell>
-                  <TableCell align="center">{data.first_name}</TableCell>
-                  <TableCell align="center">{data.last_name}</TableCell>
-                  <TableCell align="center">{data.email}</TableCell>
+                  <TableCell align="left">{data.first_name}</TableCell>
+                  <TableCell align="left">{data.last_name}</TableCell>
+                  <TableCell align="left">{data.email}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

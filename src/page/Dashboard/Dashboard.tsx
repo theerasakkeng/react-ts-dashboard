@@ -117,7 +117,7 @@ const Dashboard: FunctionComponent = () => {
         <ReactEChartsCore
           echarts={echarts}
           option={option}
-          style={{ width: "600px", height: "300px" }}
+          style={{ width: "100%", height: "300px" }}
         />
       </div>
       <div className="chart-bar-wrap">
