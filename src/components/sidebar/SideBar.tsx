@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, FunctionComponent } from "react";
+import { useState, useEffect, useMemo, FC } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import "./Sidebar.css";
@@ -6,7 +6,7 @@ import { SidebarMenu } from "./SidebarMenu";
 
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
-const SideBar: FunctionComponent = () => {
+const SideBar: FC = () => {
   const navigate = useNavigate();
   let location = useLocation();
 

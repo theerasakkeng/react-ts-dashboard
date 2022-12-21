@@ -1,10 +1,4 @@
-import {
-  useState,
-  useEffect,
-  useCallback,
-  FunctionComponent,
-  ChangeEvent,
-} from "react";
+import { useState, useEffect, useCallback, FC, ChangeEvent } from "react";
 import "./Customer.css";
 
 import Table from "@mui/material/Table";
@@ -16,18 +10,31 @@ import TableRow from "@mui/material/TableRow";
 import Avatar from "@mui/material/Avatar";
 import Pagination from "@mui/material/Pagination";
 
+import { useLoading } from "../../context/loading";
 import axios from "axios";
 import Api from "../../api/api";
 
-const Customer: FunctionComponent = () => {
+const Customer: FC = () => {
+  const { show, hide } = useLoading();
+
   const [page, setPage] = useState<number>(1);
   const [dataTable, setDataTable] = useState<any>(null);
 
   const fetchCustomer = useCallback(() => {
-    Api.GetCustommer(page).then((response: any) => {
-      //   console.log(response);
-      setDataTable(response);
-    });
+    show();
+    Api.GetCustommer(page)
+      .then((response: any) => {
+        //   console.log(response);
+        setDataTable(response);
+      })
+      .catch((error: any) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          hide();
+        }, 3000);
+      });
   }, [page]);
 
   useEffect(() => {
@@ -56,7 +63,11 @@ const Customer: FunctionComponent = () => {
     return (
       <div>
         <TableContainer
-          sx={{ borderRadius: "10px", minWidth: "100%", overFlow: "auto" }}
+          sx={{
+            borderRadius: "10px 10px 0 0",
+            minWidth: "100%",
+            overFlow: "auto",
+          }}
         >
           <Table stickyHeader>
             <TableHead>
