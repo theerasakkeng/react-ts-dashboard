@@ -20,7 +20,7 @@ const Customer: FC = () => {
   const [page, setPage] = useState<number>(1);
   const [dataTable, setDataTable] = useState<any>(null);
 
-  const fetchCustomer = useCallback(() => {
+  const fetchCustomer = (page: number) => {
     show();
     Api.GetCustommer(page)
       .then((response: any) => {
@@ -35,10 +35,10 @@ const Customer: FC = () => {
           hide();
         }, 3000);
       });
-  }, [page]);
+  };
 
   useEffect(() => {
-    fetchCustomer();
+    fetchCustomer(page);
     // const fectData = async () => {
     //   try {
     //     const res: any = await Api.GetCustommer(page);
@@ -55,9 +55,7 @@ const Customer: FC = () => {
 
   const handleChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    Api.GetCustommer(value).then((response: any) => {
-      setDataTable(response);
-    });
+    fetchCustomer(value);
   };
   if (dataTable) {
     return (
@@ -67,6 +65,7 @@ const Customer: FC = () => {
             borderRadius: "10px 10px 0 0",
             minWidth: "100%",
             overFlow: "auto",
+            position:"relative"
           }}
         >
           <Table stickyHeader>

@@ -1,14 +1,27 @@
-import { FunctionComponent } from "react";
+import { FC, useEffect, useState } from "react";
 import "./Dashboard.css";
+
+import Api from "../../api/api";
+
+import Grid from "@mui/material/Unstable_Grid2";
+
 import * as echarts from "echarts/core";
 import { PieChart } from "echarts/charts";
 import ReactEChartsCore from "echarts-for-react";
 import { TooltipComponent, LegendComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
+import { number } from "echarts";
 
 echarts.use([TooltipComponent, CanvasRenderer, LegendComponent]);
 
-const Dashboard: FunctionComponent = () => {
+const Dashboard: FC = () => {
+  const [covidData, setCovidData] = useState<object>({});
+
+  useEffect(() => {
+    Api.GetCovidDataAll().then((res: any) => {
+      setCovidData(res[0]);
+    });
+  }, []);
   let option = {
     tooltip: {
       trigger: "item",
@@ -113,6 +126,17 @@ const Dashboard: FunctionComponent = () => {
   let height: number = 600;
   return (
     <div className="dashboard-wrap">
+      <Grid container>
+        <Grid xs={12} md={4}>
+          <div className="card-wrap">{covidData.total_case}</div>
+        </Grid>
+        <Grid xs={12} md={4}>
+          <div className="card-wrap">{covidData.total_death}</div>
+        </Grid>
+        <Grid xs={12} md={4}>
+          <div className="card-wrap">{covidData.total_recovered}</div>
+        </Grid>
+      </Grid>
       <div>
         <ReactEChartsCore
           echarts={echarts}

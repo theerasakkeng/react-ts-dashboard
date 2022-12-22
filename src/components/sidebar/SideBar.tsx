@@ -81,7 +81,9 @@ const SideBar: FC = () => {
   });
   return (
     <div className="sidebar-wrap">
-      <div className="sidebar-logo-top"></div>
+      <div className="sidebar-logo-top">
+        <div onClick={() => navigate("/")}>Home</div>
+      </div>
       <div className="sidebar-menu-wrap">{menuElements}</div>
     </div>
   );
