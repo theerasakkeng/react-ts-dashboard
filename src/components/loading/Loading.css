@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.5);
@@ -10,33 +10,33 @@
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-    .loading-backdrop {
-      -webkit-backdrop-filter: blur(5px);
-      backdrop-filter: blur(5px);
-      background-color: rgba(255, 255, 255, 0.5);
-    }
+  .loading-backdrop {
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.5);
   }
+}
 
-  .dot{
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-    border-radius: 100%;
+.dot {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 100%;
+}
+.dot1 {
+  background-color: #1abc9c;
+  animation: jump-up 0.6s 0.1s linear infinite;
+}
+.dot2 {
+  background-color: #ffd64a;
+  animation: jump-up 0.6s 0.2s linear infinite;
+}
+.dot3 {
+  background-color: #e867af;
+  animation: jump-up 0.6s 0.3s linear infinite;
+}
+@keyframes jump-up {
+  50% {
+    transform: translate(0, 15px);
   }
-  .dot1{
-    background-color: #1abc9c;
-    animation: jump-up 0.6s 0.1s linear infinite;
-  }
-  .dot2{
-    background-color: #ffd64a;
-    animation: jump-up 0.6s 0.2s linear infinite;
-  }
-  .dot3{
-    background-color: #e867af;
-    animation: jump-up 0.6s 0.3s linear infinite;
-  }
-  @keyframes jump-up{
-    50%{
-      transform: translate(0,15px);
-    }
-  }
+}

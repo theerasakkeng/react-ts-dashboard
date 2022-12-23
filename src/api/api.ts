@@ -11,7 +11,7 @@ const Api = {
       axios
         .get(`${CUSTOMER_URL}/api/users?page=${page}`)
         .then((res) => {
-          resolve(res.data);
+          resolve(res.data)
         })
         .catch((err) => {
           reject(err.response);

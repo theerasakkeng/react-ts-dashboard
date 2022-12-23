@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useMemo } from "react";
 import "./Dashboard.css";
 
 import Api from "../../api/api";
@@ -10,24 +10,77 @@ import { PieChart } from "echarts/charts";
 import ReactEChartsCore from "echarts-for-react";
 import { TooltipComponent, LegendComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
-import { number } from "echarts";
+import { useLoading } from "../../context/loading";
 
 echarts.use([TooltipComponent, CanvasRenderer, LegendComponent]);
 
 const Dashboard: FC = () => {
+  const { show, hide } = useLoading();
+
   const [covidData, setCovidData] = useState<object>({});
+  const [covidDataProvince, setCovidDataProvince] = useState<any[]>([]);
+  const [covidDataProvinceTopFive, setCovidDataProvinceTopFive] = useState<
+    any[]
+  >([]);
+
+  const getCovid = async () => {
+    show();
+    try {
+      let res: any = await Api.GetCovidDataAll();
+      setCovidData(res[0]);
+    } catch (error) {
+    } finally {
+      setTimeout(() => {
+        hide();
+      }, 3000);
+    }
+  };
+
+  const getCovidProvinces = async () => {
+    show();
+    try {
+      let res: any = await Api.GetCovidDataProvices();
+      res.sort((a: any, b: any) => {
+        return b.total_case - a.total_case;
+      });
+      res.forEach((item: any, index: number) => {
+        if (index !== 0) {
+          if (index < 6) {
+            let data = {
+              value: item.total_case,
+              name: item.province,
+            };
+            covidDataProvinceTopFive.push(data);
+          }
+        }
+      });
+    } catch (error) {
+    } finally {
+      setTimeout(() => {
+        hide();
+      }, 3000);
+    }
+  };
+
+  const addComma = (text: any) => {
+    if (text) {
+      return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } else {
+      return text;
+    }
+  };
 
   useEffect(() => {
-    Api.GetCovidDataAll().then((res: any) => {
-      setCovidData(res[0]);
-    });
+    getCovid();
+    getCovidProvinces();
   }, []);
-  let option = {
+
+  let option_pie = {
     tooltip: {
       trigger: "item",
     },
     legend: {
-      top: "5%",
+      bottom: "0%",
       left: "center",
     },
     series: [
@@ -37,9 +90,9 @@ const Dashboard: FC = () => {
         radius: ["40%", "70%"],
         avoidLabelOverlap: false,
         itemStyle: {
-          borderRadius: 10,
+          borderRadius: 1,
           borderColor: "#fff",
-          borderWidth: 2,
+          borderWidth: 1,
         },
         label: {
           show: false,
@@ -47,7 +100,7 @@ const Dashboard: FC = () => {
         },
         emphasis: {
           label: {
-            show: true,
+            show: false,
             fontSize: "40",
             fontWeight: "bold",
           },
@@ -55,13 +108,7 @@ const Dashboard: FC = () => {
         labelLine: {
           show: false,
         },
-        data: [
-          { value: 1048, name: "Search Engine" },
-          { value: 735, name: "Direct" },
-          { value: 580, name: "Email" },
-          { value: 484, name: "Union Ads" },
-          { value: 300, name: "Video Ads" },
-        ],
+        data: covidDataProvinceTopFive,
       },
     ],
   };
@@ -128,21 +175,38 @@ const Dashboard: FC = () => {
     <div className="dashboard-wrap">
       <Grid container>
         <Grid xs={12} md={4}>
-          <div className="card-wrap">{covidData.total_case}</div>
+          <div className="card-wrap">
+            <div>ป่วยสะสม</div>
+            <div>{`${addComma(covidData.total_case)}(+${addComma(
+              covidData.new_case
+            )})`}</div>
+          </div>
         </Grid>
         <Grid xs={12} md={4}>
-          <div className="card-wrap">{covidData.total_death}</div>
+          <div className="card-wrap">
+            <div>เสียชีวิตสะสม</div>
+            <div>{`${addComma(covidData.total_death)}(+${addComma(
+              covidData.new_death
+            )})`}</div>
+          </div>
         </Grid>
         <Grid xs={12} md={4}>
-          <div className="card-wrap">{covidData.total_recovered}</div>
+          <div className="card-wrap">
+            <div>หายป่วยสะสม</div>
+            <div>{`${addComma(covidData.total_recovered)}(+${addComma(
+              covidData.new_recovered
+            )})`}</div>
+          </div>
         </Grid>
       </Grid>
       <div>
-        <ReactEChartsCore
-          echarts={echarts}
-          option={option}
-          style={{ width: "100%", height: "300px" }}
-        />
+        {covidDataProvinceTopFive.length > 0 && (
+          <ReactEChartsCore
+            echarts={echarts}
+            option={option_pie}
+            style={{ width: "100%", height: "300px" }}
+          />
+        )}
       </div>
       <div className="chart-bar-wrap">
         <div className="chart-bar-area">
