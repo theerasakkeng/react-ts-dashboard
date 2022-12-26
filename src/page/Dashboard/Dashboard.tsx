@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useMemo } from "react";
+import { FC, useEffect, useState } from "react";
 import "./Dashboard.css";
 
 import Api from "../../api/api";
@@ -17,10 +17,10 @@ echarts.use([TooltipComponent, CanvasRenderer, LegendComponent]);
 const Dashboard: FC = () => {
   const { show, hide } = useLoading();
 
-  const [covidData, setCovidData] = useState<object>({});
-  const [covidDataProvince, setCovidDataProvince] = useState<any[]>([]);
+  const [covidData, setCovidData] = useState<any>({});
+  const [covidDataProvince, setCovidDataProvince] = useState<object[]>([]);
   const [covidDataProvinceTopFive, setCovidDataProvinceTopFive] = useState<
-    any[]
+    object[]
   >([]);
 
   const getCovid = async () => {

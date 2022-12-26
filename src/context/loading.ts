@@ -5,8 +5,6 @@ interface LoadingContextInterface {
   hide: () => void;
 }
 
-export const LoadingContext = createContext<LoadingContextInterface | null>(
-  null
-);
+export const LoadingContext = createContext<LoadingContextInterface>({} as LoadingContextInterface);
 
 export const useLoading = () => useContext(LoadingContext);

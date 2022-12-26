@@ -12,6 +12,7 @@ const SideBar: FC = () => {
 
   const [part, setPart] = useState<any>();
   const [dropdownMenu, setDropdownMene] = useState<boolean>(false);
+  const [sideBar, setSideBar] = useState<string>("");
 
   useMemo(() => {
     setPart(location.pathname);
@@ -19,10 +20,12 @@ const SideBar: FC = () => {
 
   const goTo = (menudata: any) => {
     if (menudata.submenu.length > 0) {
-      if (dropdownMenu == false) {
+      if(menudata.title == sideBar){
+        setDropdownMene(prev => !prev);
+        setSideBar(menudata.title);
+      }else {
         setDropdownMene(true);
-      } else {
-        setDropdownMene(false);
+        setSideBar(menudata.title);
       }
     } else if (menudata.submenu.length == 0) {
       setDropdownMene(false);
@@ -41,7 +44,9 @@ const SideBar: FC = () => {
       <div className="menu-group" key={index}>
         <div
           className={`menu-wrap${part == item.link ? " active" : ""}${
-            dropdownMenu == true && item.submenu.length > 0
+            dropdownMenu == true &&
+            item.submenu.length > 0 &&
+            item.title == sideBar
               ? " dropdown-active"
               : ""
           }`}
@@ -57,7 +62,7 @@ const SideBar: FC = () => {
             return (
               <div
                 className={`submenu-dropdown${
-                  dropdownMenu == true ? " open" : ""
+                  dropdownMenu == true && item.title == sideBar ? " open" : ""
                 }`}
                 key={index}
               >
@@ -68,7 +73,7 @@ const SideBar: FC = () => {
                   onClick={() => goToSubmenu(subitem)}
                 >
                   <div className="icon-submenu">
-                    <FiberManualRecordIcon sx={{fontSize:12}}/>
+                    <FiberManualRecordIcon sx={{ fontSize: 12 }} />
                   </div>
                   <div>{subitem.title}</div>
                 </div>

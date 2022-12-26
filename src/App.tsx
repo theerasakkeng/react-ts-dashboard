@@ -37,7 +37,7 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="customer" element={<Customer />} />
+                    <Route path="customers/customers-list" element={<Customer />} />
                   </Routes>
                 </div>
               </Container>
