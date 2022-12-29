@@ -11,6 +11,7 @@ import ReactEChartsCore from "echarts-for-react";
 import { TooltipComponent, LegendComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
 import { useLoading } from "../../context/loading";
+import { ListItem } from "@mui/material";
 
 echarts.use([TooltipComponent, CanvasRenderer, LegendComponent]);
 
@@ -22,7 +23,13 @@ const Dashboard: FC = () => {
   const [covidDataProvinceTopFive, setCovidDataProvinceTopFive] = useState<
     object[]
   >([]);
-
+  const [colorChart, setColorChart] = useState<object[]>([
+    { color: "#F2726F" },
+    { color: "#FEC533" },
+    { color: "#62B58F" },
+    { color: "#29C3BE" },
+    { color: "#5D62B5" },
+  ]);
   const getCovid = async () => {
     show();
     try {
@@ -58,7 +65,7 @@ const Dashboard: FC = () => {
     } finally {
       setTimeout(() => {
         hide();
-      }, 3000);
+      }, 1500);
     }
   };
 
@@ -76,6 +83,11 @@ const Dashboard: FC = () => {
   }, []);
 
   let option_pie = {
+    title: {
+      text: 'จังหวัดที่มีคนติด Covide มากที่สุด 5 อันดับ',
+      top: 10,
+      left: 'center'
+    },
     tooltip: {
       trigger: "item",
     },
@@ -83,32 +95,28 @@ const Dashboard: FC = () => {
       bottom: "0%",
       left: "center",
     },
+    color: ["#F2726F", "#FEC533", "#62B58F", "#29C3BE", "#5D62B5"],
     series: [
       {
-        name: "Access From",
+        name: "Covid Top5 Thailand",
+        // width: 300,
+        left: "center",
         type: "pie",
-        radius: ["40%", "70%"],
+        radius: ["30%", "70%"],
         avoidLabelOverlap: false,
         itemStyle: {
           borderRadius: 1,
           borderColor: "#fff",
           borderWidth: 1,
         },
-        label: {
-          show: false,
-          position: "center",
-        },
+        data: covidDataProvinceTopFive,
         emphasis: {
-          label: {
-            show: false,
-            fontSize: "40",
-            fontWeight: "bold",
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: "rgba(0, 0, 0, 0.5)",
           },
         },
-        labelLine: {
-          show: false,
-        },
-        data: covidDataProvinceTopFive,
       },
     ],
   };
@@ -171,11 +179,12 @@ const Dashboard: FC = () => {
     animationEasingUpdate: "linear",
   };
   let height: number = 600;
+
   return (
     <div className="dashboard-wrap">
       <Grid container>
         <Grid xs={12} md={4}>
-          <div className="card-wrap">
+          <div className="card-wrap bg-blur">
             <div>ป่วยสะสม</div>
             <div>{`${addComma(covidData.total_case)}(+${addComma(
               covidData.new_case
@@ -183,7 +192,7 @@ const Dashboard: FC = () => {
           </div>
         </Grid>
         <Grid xs={12} md={4}>
-          <div className="card-wrap">
+          <div className="card-wrap bg-blur">
             <div>เสียชีวิตสะสม</div>
             <div>{`${addComma(covidData.total_death)}(+${addComma(
               covidData.new_death
@@ -191,32 +200,48 @@ const Dashboard: FC = () => {
           </div>
         </Grid>
         <Grid xs={12} md={4}>
-          <div className="card-wrap">
+          <div className="card-wrap bg-blur">
             <div>หายป่วยสะสม</div>
             <div>{`${addComma(covidData.total_recovered)}(+${addComma(
               covidData.new_recovered
             )})`}</div>
           </div>
         </Grid>
+        <Grid xs={12} md={12} lg={6}>
+          {covidDataProvinceTopFive.length > 0 && (
+            <div className="pie-chart-wrap bg-blur">
+              <ReactEChartsCore
+                echarts={echarts}
+                option={option_pie}
+                style={{ width: "100%", minHeight: "100%" }}
+              />
+              <div className="data-pie-chart-wrap">
+                {covidDataProvinceTopFive.map((item: any, index: number) => {
+                  return (
+                    <div key={index} style={colorChart[index]}>
+                      <div>{item.name}</div>
+                      <div style={{ margin: "0 0 10px 0" }}>
+                        {addComma(item.value)}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </Grid>
+        <Grid xs={12} md={12} lg={6}>
+          <div className="chart-bar-wrap bg-blur">
+            <div className="chart-bar-area">
+              <ReactEChartsCore
+                echarts={echarts}
+                option={option_bar}
+                style={{ height: `${height}px` }}
+              />
+            </div>
+          </div>
+        </Grid>
       </Grid>
-      <div>
-        {covidDataProvinceTopFive.length > 0 && (
-          <ReactEChartsCore
-            echarts={echarts}
-            option={option_pie}
-            style={{ width: "100%", height: "300px" }}
-          />
-        )}
-      </div>
-      <div className="chart-bar-wrap">
-        <div className="chart-bar-area">
-          <ReactEChartsCore
-            echarts={echarts}
-            option={option_bar}
-            style={{ height: `${height}px` }}
-          />
-        </div>
-      </div>
     </div>
   );
 };

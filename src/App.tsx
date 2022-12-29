@@ -33,7 +33,7 @@ function App() {
                   paddingBottom: "24px",
                 }}
               >
-                <div className="bg-blur">
+                <div className="content-route bg-blur">
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="dashboard" element={<Dashboard />} />
