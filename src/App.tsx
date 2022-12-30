@@ -9,6 +9,7 @@ import NavbarTop from "./components/navbar/NavbarTop";
 import Dashboard from "./page/dashboard/Dashboard";
 import Customer from "./page/customer/Customer";
 import Home from "./page/home/Home";
+import Products from "./page/products/Products";
 
 import { LoadingProvider } from "./Provider/LoaderProvider";
 
@@ -37,7 +38,11 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="customers/customers-list" element={<Customer />} />
+                    <Route
+                      path="customers/customers-list"
+                      element={<Customer />}
+                    />
+                    <Route path="store/products" element={<Products />} />
                   </Routes>
                 </div>
               </Container>
