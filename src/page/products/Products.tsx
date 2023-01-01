@@ -13,6 +13,7 @@ const Products: FC = () => {
   const { show, hide } = useLoading();
 
   const [products, setProducts] = useState<any>([]);
+  const [urlImage, setUrlImage] = useState<string>("");
 
   const getProductsData = async () => {
     show();
@@ -30,6 +31,11 @@ const Products: FC = () => {
     getProductsData();
   }, []);
 
+  const getUrlImage = (url: string) => {
+    setUrlImage(url);
+    console.log(urlImage);
+  };
+
   const productElements = products.map((item: any) => {
     return (
       <Grid xs={12} sm={6} md={3} lg={2} key={item.id}>
@@ -37,6 +43,8 @@ const Products: FC = () => {
       </Grid>
     );
   });
+
+  const setUrl = (url: string) => {};
 
   return (
     <div style={{ padding: "20px" }}>
