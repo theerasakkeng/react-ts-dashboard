@@ -1,0 +1,5 @@
+#map {
+    height: calc(100vh - 113px);
+    width: 100%;
+    border-radius: 10px;
+  }

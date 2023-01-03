@@ -10,6 +10,9 @@ import Dashboard from "./page/dashboard/Dashboard";
 import Customer from "./page/customer/Customer";
 import Home from "./page/home/Home";
 import Products from "./page/products/Products";
+import Leaflet from "./page/map/leaflet/Leaflet";
+import Maplibre from "./page/map/maplibre/Maplibre";
+import GoogleMap from "./page/map/googlemap/GoogleMap";
 
 import { LoadingProvider } from "./Provider/LoaderProvider";
 
@@ -42,6 +45,9 @@ function App() {
                       path="customers/customers-list"
                       element={<Customer />}
                     />
+                    <Route path="map/leaflet" element={<Leaflet />} />
+                    <Route path="map/map-libre" element={<Maplibre />} />
+                    <Route path="map/google-map" element={<GoogleMap />} />
                     <Route path="store/products" element={<Products />} />
                   </Routes>
                 </div>
