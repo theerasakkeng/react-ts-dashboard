@@ -14,7 +14,7 @@ const Leaflet: FC = () => {
       center: [100.523186, 13.736717],
       zoom: 10,
     });
-    mapRender.addControl(new NavigationControl(), "top-left");
+    mapRender.addControl(new NavigationControl({}), "top-left");
     setMount(mapRender);
   }, [mount]);
   useEffect(() => {
