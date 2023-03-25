@@ -8,7 +8,7 @@ import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
 const SideBar: FC = () => {
   const navigate = useNavigate();
-  let location = useLocation();
+  const location = useLocation();
 
   const [part, setPart] = useState<any>();
   const [dropdownMenu, setDropdownMene] = useState<boolean>(false);
