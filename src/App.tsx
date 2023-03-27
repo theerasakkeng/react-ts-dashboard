@@ -16,6 +16,7 @@ import GoogleMap from "./page/map/googlemap/GoogleMap";
 import Error from "./page/error/Error";
 import Login from "./page/login/Login";
 import Layout from "./page/Layout";
+import Register from "./page/register/Register";
 
 import { LoadingProvider } from "./Provider/LoaderProvider";
 
@@ -37,6 +38,8 @@ function App() {
             <Route path="map/google-map" element={<GoogleMap />} />
             <Route path="store/products" element={<Products />} />
           </Route>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </div>
