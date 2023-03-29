@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import "./App.css";
-import Container from "@mui/material/Container";
-import SideBar from "./components/sidebar/SideBar";
-import NavbarTop from "./components/navbar/NavbarTop";
 
 import Dashboard from "./page/dashboard/Dashboard";
 import Customer from "./page/customer/Customer";
@@ -20,11 +17,10 @@ import Register from "./page/register/Register";
 
 import { LoadingProvider } from "./Provider/LoaderProvider";
 
-import getData from "./api/api";
-
 function App() {
   const [logined, setLoggedIn] = useState<Boolean>(true);
   const navigate = useNavigate();
+
   return (
     <LoadingProvider>
       <div className="App">

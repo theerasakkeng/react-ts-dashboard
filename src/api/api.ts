@@ -61,5 +61,41 @@ const Api = {
         });
     });
   },
+  GetSalt: (user_name: string) => {
+    return new Promise((resolve, reject) => {
+      axios.defaults.headers.common["Content-Type"] =
+        "application/x-www-form-urlencoded";
+      axios
+        .get("http://localhost:3000/api/Authen/Getsalt", {
+          params: {
+            user_name: user_name,
+          },
+        })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err.response);
+        });
+    });
+  },
+  Login: (user_name: string, password: string) => {
+    return new Promise((resolve, reject) => {
+      let data = {
+        user_name: user_name,
+        password: password,
+      };
+      axios.defaults.headers.common["Content-Type"] =
+        "application/x-www-form-urlencoded";
+      axios
+        .post("http://localhost:3000/api/Authen/Login", data)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err.response);
+        });
+    });
+  },
 };
 export default Api;

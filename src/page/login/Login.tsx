@@ -10,10 +10,17 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { useNavigate } from "react-router-dom";
+import CryptoJS from "crypto-js";
+import Api from "../../api/api";
 
 const Login: FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [login, setLogin] = useState({
+    user_name: "",
+    password: "",
+  });
+  const [salt, setSalt] = useState("");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -21,6 +28,27 @@ const Login: FC = () => {
   ) => {
     event.preventDefault();
   };
+
+  const getSalt = async () => {
+    let res: any = await Api.GetSalt(login.user_name);
+    setSalt(res.data.salt);
+  };
+
+  const encryptPassword = (password: string, salt: string) => {
+    let hash = CryptoJS.SHA256(password + salt);
+    let hash_string = hash.toString(CryptoJS.enc.Base64);
+    return hash_string;
+  };
+
+  const onLogin = async () => {
+    let data = {
+      user_name: login.user_name,
+      password: encryptPassword(login.password, salt),
+    };
+    let res: any = await Api.Login(data.user_name, data.password);
+    console.log(res);
+  };
+
   return (
     <div className="login-container">
       <div className="login-warp bg-blur">
@@ -28,6 +56,8 @@ const Login: FC = () => {
         <Grid container rowSpacing={2}>
           <Grid xs={12}>
             <TextField
+              onChange={(e) => (login.user_name = e.target.value)}
+              onBlur={getSalt}
               label="Username"
               InputProps={{
                 startAdornment: (
@@ -42,6 +72,7 @@ const Login: FC = () => {
           </Grid>
           <Grid xs={12}>
             <TextField
+              onChange={(e) => (login.password = e.target.value)}
               label="Password"
               InputProps={{
                 startAdornment: (
@@ -69,7 +100,9 @@ const Login: FC = () => {
             />
           </Grid>
           <Grid xs={12} container justifyContent="center">
-            <Button variant="contained">Login</Button>
+            <Button variant="contained" onClick={onLogin}>
+              Login
+            </Button>
           </Grid>
         </Grid>
         <div className="login-footer">
